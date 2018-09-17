@@ -9,6 +9,7 @@ Options
 -----------------
 showWeekends: boolean
 showToday: boolean
+scrollToday: boolean
 data: object
 cellWidth: number
 cellHeight: number

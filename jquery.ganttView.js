@@ -54,6 +54,7 @@ const gantt = function (jQuery) {
         var defaults = {
             showWeekends: true,
             showToday: true,
+            scrollToday: false,
             cellWidth: 21,
             cellHeight: 31,
             vHeaderWidth: 100,
@@ -100,10 +101,19 @@ const gantt = function (jQuery) {
                 new Chart(div, opts).render();
                 container.append(div);
 
+                var slideContainer = jQuery("div.ganttview-slide-container", container);
+
                 if (opts.slideWidth) {
                     var w = jQuery("div.ganttview-vtheader", container).outerWidth() +
-                        jQuery("div.ganttview-slide-container", container).outerWidth();
+                        slideContainer.outerWidth();
                     container.css("width", (w + 2) + "px");
+                }
+
+                if (opts.showToday && opts.scrollToday) {
+                    var block = jQuery("div.ganttview-today", container);
+                    var scrollvalue = slideContainer.scrollLeft();
+                    var offset = block.offset().left - slideContainer.offset().left - 1 + scrollvalue;
+                    slideContainer.scrollLeft(offset);
                 }
 
                 new Behavior(container, opts).apply();
